@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+{% block title %}Book Room{% endblock %}
+{% block content %}
+    <h2>Book Room</h2>
+    {% if message %}
+        <p>{{ message }}</p>
+        {% if booked_room %}
+            <h3>Booked Room Details</h3>
+            <table>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Seater</th>
+                    <th>Fees</th>
+                    <th>Details</th>
+                </tr>
+                <tr>
+                    <td>{{ booked_room.room_number }}</td>
+                    <td>{{ booked_room.seater }}</td>
+                    <td>{{ booked_room.fees }}</td>
+                    <td><a href="{{ url_for('room_details', room_id=booked_room.id) }}">View Details</a></td>
+                </tr>
+            </table>
+        {% endif %}
+    {% else %}
+        <h3>Available Rooms</h3>
+        {% if rooms %}
+            <table>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Seater</th>
+                    <th>Fees</th>
+                    <th>Occupants</th>
+                    <th>Availability</th>
+                    <th>Details</th>
+                    <th>Action</th>
+                </tr>
+                {% for room_data in rooms %}
+                    <tr>
+                        <td>{{ room_data.room.room_number }}</td>
+                        <td>{{ room_data.room.seater }}</td>
+                        <td>{{ room_data.room.fees }}</td>
+                        <td>{{ room_data.occupants }}</td>
+                        <td>{{ 'Available' if room_data.occupants < room_data.room.seater else 'Full' }}</td>
+                        <td><a href="{{ url_for('room_details', room_id=room_data.room.id) }}">View Details</a></td>
+                        <td>
+                            {% if room_data.occupants < room_data.room.seater %}
+                                <form method="POST">
+                                    <input type="hidden" name="room_id" value="{{ room_data.room.id }}">
+                                    <button type="submit">Book</button>
+                                </form>
+                            {% else %}
+                                <button disabled>Full</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No rooms available.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

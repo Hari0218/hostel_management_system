@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+{% block title %}Mess Booking{% endblock %}
+{% block content %}
+    <h2>Mess Booking</h2>
+    <h3>Menu Items</h3>
+    <div class="menu-items">
+        {% for meal_type, items in menu_items.items() %}
+            <h4>{{ meal_type }}</h4>
+            <ul>
+                {% for item in items %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+    <h3>Book a Meal</h3>
+    <form method="POST">
+        <label for="meal_type">Meal Type:</label>
+        <select id="meal_type" name="meal_type">
+            <option value="Breakfast">Breakfast</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Snacks">Snacks</option>
+        </select>
+        <label for="menu_item">Menu Item:</label>
+        <select id="menu_item" name="menu_item">
+            <option value="Idli">Idli</option>
+            <option value="Dosa">Dosa</option>
+            <option value="Poha">Poha</option>
+            <option value="Upma">Upma</option>
+            <option value="Rice Dal">Rice Dal</option>
+            <option value="Chicken Curry">Chicken Curry</option>
+            <option value="Veg Biryani">Veg Biryani</option>
+            <option value="Paneer Butter Masala">Paneer Butter Masala</option>
+            <option value="Roti Sabzi">Roti Sabzi</option>
+            <option value="Fried Rice">Fried Rice</option>
+            <option value="Noodles">Noodles</option>
+            <option value="Fish Curry">Fish Curry</option>
+            <option value="Samosa">Samosa</option>
+            <option value="Pakoda">Pakoda</option>
+            <option value="Sandwich">Sandwich</option>
+            <option value="Chips">Chips</option>
+        </select>
+        <label for="booking_date">Booking Date:</label>
+        <select id="booking_date" name="booking_date">
+            {% for label, date in dates.items() %}
+                <option value="{{ date }}">{{ label }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Book Meal</button>
+    </form>
+    <h3>Your Mess Bookings</h3>
+    {% if bookings %}
+        <table>
+            <tr>
+                <th>Meal Type</th>
+                <th>Menu Item</th>
+                <th>Booking Date</th>
+                <th>Booked On</th>
+            </tr>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.meal_type }}</td>
+                    <td>{{ booking.menu_item }}</td>
+                    <td>{{ booking.booking_date }}</td>
+                    <td>{{ booking.created_at }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No mess bookings yet.</p>
+    {% endif %}
+{% endblock %}

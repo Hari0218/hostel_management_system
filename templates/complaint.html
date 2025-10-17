@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block title %}Submit Complaint{% endblock %}
+{% block content %}
+    <h2>Submit Complaint</h2>
+    <form method="POST">
+        <label for="complaint_text">Complaint:</label>
+        <textarea id="complaint_text" name="complaint_text" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

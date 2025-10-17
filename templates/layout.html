@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - Hostel Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff5e1, #f5f5dc); /* Cream to beige gradient */
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #2e8b57; /* Emerald */
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2rem;
+            animation: fadeIn 1s ease-in;
+        }
+        nav {
+            background-color: #ffffff;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        nav a {
+            color: #003087; /* Navy */
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        nav a:hover {
+            background-color: #ffab91; /* Coral accent */
+            color: white;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            animation: slideIn 1s ease-out;
+        }
+        h2, h3 {
+            color: #2e8b57; /* Emerald */
+            margin-bottom: 1rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #2e8b57; /* Emerald */
+            color: white;
+        }
+        form {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2e8b57; /* Emerald */
+            font-size: 1.1rem;
+        }
+        select, input, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #ff5722; /* Deep orange */
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #e64a19; /* Darker orange */
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .flash-message {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+        }
+        .danger {
+            background-color: #ffcdd2;
+            color: #d32f2f;
+        }
+        .menu-items {
+            background-color: #f9f9f9;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        .menu-items ul {
+            list-style-type: none;
+        }
+        .menu-items li {
+            margin-bottom: 0.5rem;
+        }
+        .room-photo {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #2e8b57; /* Emerald */
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hostel Management System</h1>
+    </header>
+    <nav>
+        <a href="{{ url_for('home') }}"><i class="fas fa-home"></i> Home</a>
+        {% if 'user_id' in session %}
+            <a href="{{ url_for('user_dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="{{ url_for('book_room') }}"><i class="fas fa-bed"></i> Book Room</a>
+            <a href="{{ url_for('mess_booking') }}"><i class="fas fa-utensils"></i> Mess Booking</a>
+            <a href="{{ url_for('user_profile') }}"><i class="fas fa-user"></i> Profile</a>
+            <a href="{{ url_for('user_logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        {% elif 'admin_id' in session %}
+            <a href="{{ url_for('admin_dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="{{ url_for('manage_rooms') }}"><i class="fas fa-bed"></i> Manage Rooms</a>
+            <a href="{{ url_for('admin_manage_mess') }}"><i class="fas fa-utensils"></i> Manage Mess</a>
+            <a href="{{ url_for('admin_profile') }}"><i class="fas fa-user"></i> Profile</a>
+            <a href="{{ url_for('admin_logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+        {% endif %}
+    </nav>
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}
+        {% endblock %}
+    </div>
+    <footer>
+        <p>© 2025 Hostel Management System</p>
+    </footer>
+</body>
+</html>

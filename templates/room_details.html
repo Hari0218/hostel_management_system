@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% block title %}Room Details{% endblock %}
+{% block content %}
+    <h2>Room Details</h2>
+    <p>Room Number: {{ room.room_number }}</p>
+    <p>Seater: {{ room.seater }}</p>
+    <p>Fees: {{ room.fees }}</p>
+    <p>Occupants: {{ room.users|length }}</p>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block title %}Manage Mess Bookings{% endblock %}
+{% block content %}
+    <h2>Manage Mess Bookings</h2>
+    <h3>All Mess Bookings</h3>
+    {% if bookings %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Meal Type</th>
+                <th>Menu Item</th>
+                <th>Booking Date</th>
+                <th>Booked On</th>
+                <th>Action</th>
+            </tr>
+            {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.user.username }}</td>
+                    <td>{{ booking.meal_type }}</td>
+                    <td>{{ booking.menu_item }}</td>
+                    <td>{{ booking.booking_date }}</td>
+                    <td>{{ booking.created_at }}</td>
+                    <td>
+                        <form method="POST">
+                            <input type="hidden" name="booking_id" value="{{ booking.id }}">
+                            <select name="meal_type">
+                                <option value="Breakfast" {% if booking.meal_type == 'Breakfast' %}selected{% endif %}>Breakfast</option>
+                                <option value="Lunch" {% if booking.meal_type == 'Lunch' %}selected{% endif %}>Lunch</option>
+                                <option value="Dinner" {% if booking.meal_type == 'Dinner' %}selected{% endif %}>Dinner</option>
+                                <option value="Snacks" {% if booking.meal_type == 'Snacks' %}selected{% endif %}>Snacks</option>
+                            </select>
+                            <select name="menu_item">
+                                <option value="Idli" {% if booking.menu_item == 'Idli' %}selected{% endif %}>Idli</option>
+                                <option value="Dosa" {% if booking.menu_item == 'Dosa' %}selected{% endif %}>Dosa</option>
+                                <option value="Poha" {% if booking.menu_item == 'Poha' %}selected{% endif %}>Poha</option>
+                                <option value="Upma" {% if booking.menu_item == 'Upma' %}selected{% endif %}>Upma</option>
+                                <option value="Rice Dal" {% if booking.menu_item == 'Rice Dal' %}selected{% endif %}>Rice Dal</option>
+                                <option value="Chicken Curry" {% if booking.menu_item == 'Chicken Curry' %}selected{% endif %}>Chicken Curry</option>
+                                <option value="Veg Biryani" {% if booking.menu_item == 'Veg Biryani' %}selected{% endif %}>Veg Biryani</option>
+                                <option value="Paneer Butter Masala" {% if booking.menu_item == 'Paneer Butter Masala' %}selected{% endif %}>Paneer Butter Masala</option>
+                                <option value="Roti Sabzi" {% if booking.menu_item == 'Roti Sabzi' %}selected{% endif %}>Roti Sabzi</option>
+                                <option value="Fried Rice" {% if booking.menu_item == 'Fried Rice' %}selected{% endif %}>Fried Rice</option>
+                                <option value="Noodles" {% if booking.menu_item == 'Noodles' %}selected{% endif %}>Noodles</option>
+                                <option value="Fish Curry" {% if booking.menu_item == 'Fish Curry' %}selected{% endif %}>Fish Curry</option>
+                                <option value="Samosa" {% if booking.menu_item == 'Samosa' %}selected{% endif %}>Samosa</option>
+                                <option value="Pakoda" {% if booking.menu_item == 'Pakoda' %}selected{% endif %}>Pakoda</option>
+                                <option value="Sandwich" {% if booking.menu_item == 'Sandwich' %}selected{% endif %}>Sandwich</option>
+                                <option value="Chips" {% if booking.menu_item == 'Chips' %}selected{% endif %}>Chips</option>
+                            </select>
+                            <select name="booking_date">
+                                {% for label, date in dates.items() %}
+                                    <option value="{{ date }}" {% if booking.booking_date.strftime('%Y-%m-%d') == date %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No mess bookings found.</p>
+    {% endif %}
+{% endblock %}

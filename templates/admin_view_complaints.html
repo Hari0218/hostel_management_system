@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block title %}View Complaints{% endblock %}
+{% block content %}
+    <h2>View Complaints</h2>
+    {% if complaints %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Complaint</th>
+                <th>Status</th>
+                <th>Created At</th>
+            </tr>
+            {% for complaint in complaints %}
+                <tr>
+                    <td>{{ complaint.id }}</td>
+                    <td>{{ complaint.user.username }}</td>
+                    <td>{{ complaint.complaint_text }}</td>
+                    <td>{{ complaint.status }}</td>
+                    <td>{{ complaint.created_at }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No complaints found.</p>
+    {% endif %}
+{% endblock %}

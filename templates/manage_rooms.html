@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block title %}Manage Rooms{% endblock %}
+{% block content %}
+    <h2>Manage Rooms</h2>
+    <h3>Add Room</h3>
+    <form method="POST">
+        <label for="room_number">Room Number:</label>
+        <input type="text" id="room_number" name="room_number" required>
+        <label for="seater">Seater:</label>
+        <input type="number" id="seater" name="seater" required>
+        <label for="fees">Fees:</label>
+        <input type="number" id="fees" name="fees" step="0.01" required>
+        <button type="submit">Add Room</button>
+    </form>
+    <h3>Existing Rooms</h3>
+    {% if rooms %}
+        <table>
+            <tr>
+                <th>Room Number</th>
+                <th>Seater</th>
+                <th>Fees</th>
+                <th>Details</th>
+            </tr>
+            {% for room in rooms %}
+                <tr>
+                    <td>{{ room.room_number }}</td>
+                    <td>{{ room.seater }}</td>
+                    <td>{{ room.fees }}</td>
+                    <td><a href="{{ url_for('room_details', room_id=room.id) }}">View Details</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No rooms found.</p>
+    {% endif %}
+{% endblock %}

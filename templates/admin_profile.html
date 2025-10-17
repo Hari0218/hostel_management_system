@@ -1,0 +1,8 @@
+{% extends 'layout.html' %}
+{% block title %}Admin Profile{% endblock %}
+{% block content %}
+    <h2>Admin Profile</h2>
+    <p>Username: {{ admin.username }}</p>
+    <p>Email: {{ admin.email }}</p>
+    <p><a href="{{ url_for('change_password') }}">Change Password</a></p>
+{% endblock %}

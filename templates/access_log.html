@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block title %}Access Log{% endblock %}
+{% block content %}
+    <h2>Access Log</h2>
+    {% if logs %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Login Time</th>
+            </tr>
+            {% for log in logs %}
+                <tr>
+                    <td>{{ log.id }}</td>
+                    <td>{{ log.user.username }}</td>
+                    <td>{{ log.login_time }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No access logs found.</p>
+    {% endif %}
+{% endblock %}

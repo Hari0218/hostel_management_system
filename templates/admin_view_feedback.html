@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block title %}View Feedback{% endblock %}
+{% block content %}
+    <h2>View Feedback</h2>
+    {% if feedbacks %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Feedback</th>
+                <th>Created At</th>
+            </tr>
+            {% for feedback in feedbacks %}
+                <tr>
+                    <td>{{ feedback.id }}</td>
+                    <td>{{ feedback.user.username }}</td>
+                    <td>{{ feedback.feedback_text }}</td>
+                    <td>{{ feedback.created_at }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No feedback found.</p>
+    {% endif %}
+{% endblock %}
